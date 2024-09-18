@@ -1,0 +1,13 @@
+@using ShopApp.Web.Models
+@model Cart
+
+<div class="d-flex align-items-center">
+    <a href="/Cart" class="btn btn-sm btn-success me-2">Sepete Git</a>
+    @if(Model?.Items.Count > 0)
+    {
+        <span class="badge bg-light text-dark">
+            @Model?.Items.Sum(i => i.Quantity) adet ürün | 
+            @Model?.CalculateTotal() TL
+        </span>
+    }
+</div>

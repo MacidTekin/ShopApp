@@ -1,0 +1,14 @@
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\bin\Debug\net8.0\ShopApp.Data.deps.json
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\bin\Debug\net8.0\ShopApp.Data.runtimeconfig.json
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\bin\Debug\net8.0\ShopApp.Data.dll
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\bin\Debug\net8.0\ShopApp.Data.pdb
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\ShopApp.Data.csproj.AssemblyReference.cache
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\ShopApp.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\ShopApp.Data.AssemblyInfoInputs.cache
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\ShopApp.Data.AssemblyInfo.cs
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\ShopApp.Data.csproj.CoreCompileInputs.cache
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\ShopApp.Data.dll
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\refint\ShopApp.Data.dll
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\ShopApp.Data.pdb
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\ShopApp.Data.genruntimeconfig.cache
+C:\Users\tknma\Desktop\ShopApp\ShopApp\ShopApp.Data\obj\Debug\net8.0\ref\ShopApp.Data.dll

@@ -1,0 +1,97 @@
+@model ProductsViewModel.ProductManagmentViewModel
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="bg-white-4 p-4 rounded">
+            <h2 class="text-center mb-4">Ürün Güncelle</h2>
+            
+<form asp-controller="Product" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div class="text-danger" asp-validation-summary="All"></div>
+
+    <!-- Ürün Adı -->
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Ürün Adı</label>
+        <input asp-for="Name" class="form-control">
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+
+    <!-- Ürün Açıklaması -->
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Ürün Açıklaması</label>
+        <input asp-for="Description" class="form-control">
+        <span class="text-danger" asp-validation-for="Description"></span>
+    </div>
+
+    <!-- Ürün Route Url -->
+    <div class="mb-3">
+        <label asp-for="Url" class="form-label">Ürün Route Url</label>
+        <input asp-for="Url" class="form-control">
+        <span class="text-danger" asp-validation-for="Url"></span>
+    </div>
+    <!-- Fiyat -->
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Ürün Fiyatı</label>
+        <div class="input-group">
+            <input asp-for="Price" type="text" class="form-control" id="priceInput">
+            <span class="input-group-text">₺</span>
+        </div>
+        <span class="text-danger" asp-validation-for="Price"></span>
+    </div>
+
+
+    <!-- Stok -->
+    <div class="mb-3">
+        <label asp-for="TotalStock" class="form-label">Stok Miktarı</label>
+        <input asp-for="TotalStock" class="form-control">
+        <span class="text-danger" asp-validation-for="TotalStock"></span>
+    </div>
+    <!-- Resim -->
+    <div class="mb-3">
+            <label class="form-label">Yeni Ürün Resmi</label>
+            <input type="file" name="Image" class="form-control">
+            <span class="text-danger" asp-validation-for="Image"></span>
+    </div>
+
+    <!-- Kategori -->
+    <div class="mb-3">
+        <label class="form-label">Kategoriler</label>
+        @foreach (var category in ViewBag.Categories)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="Categories" value="@category.Id" 
+                       @(Model.Categories.Contains(category.Id) ? "checked" : "")>
+                <label class="form-check-label">@category.Name</label>
+            </div>
+        }
+    </div>
+
+    <!-- Ürün İçeriği -->
+    <div class="mb-3">
+        <label asp-for="Content" class="form-label">Ürün İçeriği</label>
+        <textarea asp-for="Content" class="form-control"></textarea>
+        <span class="text-danger" asp-validation-for="Content"></span>
+    </div>
+
+
+    <!-- Kaydet Butonu -->
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Ürün Güncelle</button>
+    </div>
+</form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.3.0/tinymce.min.js" integrity="sha512-RUZ2d69UiTI+LdjfDCxqJh5HfjmOcouct56utQNVRjr90Ea8uHQa+gCxvxDTC9fFvIGP+t4TDDJWNTRV48tBpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#Content',
+            menubar: false,
+            plugins: 'link image code',
+            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image',
+        });
+    </script>  
+}

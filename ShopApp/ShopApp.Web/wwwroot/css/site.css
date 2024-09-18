@@ -1,0 +1,74 @@
+
+a {
+    text-decoration: none;
+}
+.avatar{
+    width: 4rem;
+    height: 4rem;
+}
+
+.card-img-top {
+    position: relative;
+    transition: opacity 0.5s ease;
+}
+
+.card-img-top:hover {
+    opacity: 0.3;
+}
+
+.price-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    color: green;
+    font-size: 1.5rem;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.card-img-top:hover + .price-overlay {
+    opacity: 1;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+    background-color: lightgray;
+    border-radius: 4px;
+}
+
+.pagination a.active {
+    background-color: gray;
+    color: white;
+}
+
+.pagination a:hover {
+    background-color: darkgray;
+}
+
+/* Oklar için */
+.pagination .prev, .pagination .next {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: black;
+}
+
+.pagination .prev:hover, .pagination .next:hover {
+    color: gray;
+}
+

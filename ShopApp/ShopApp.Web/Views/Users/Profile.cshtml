@@ -1,0 +1,68 @@
+@model User
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Sol Taraf: Kullanıcı Bilgileri -->
+        <div class="col-md-6">
+            <h2>Profil Bilgileri</h2>
+            <form asp-action="Profile" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="FullName">Ad Soyad</label>
+                    <input type="text" class="form-control" id="FullName" name="FullName" value="@Model.FullName" />
+                </div>
+                <div class="form-group">
+                    <label for="UserName">Kullanıcı Adı</label>
+                    <input type="text" class="form-control" id="UserName" name="UserName" value="@Model.UserName" />
+                </div>
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" />
+                </div>
+                <div class="form-group">
+                    <label for="Password">Şifre (Değiştirmek istemiyorsanız boş bırakın)</label>
+                    <input type="password" class="form-control" id="Password" name="Password" />
+                </div>
+                <div class="form-group">
+                    <label for="Image">Profil Resmi</label>
+                    <input type="file" class="form-control-file" id="Image" name="Image" />
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+                        <img src="@Url.Content("~/img/" + Model.Image)" alt="Profil Resmi" class="img-thumbnail mt-3" style="width:150px;" />
+                    }
+                </div>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </form>
+        </div>
+
+        <!-- Sağ Taraf: Siparişlerim -->
+        <div class="col-md-6">
+            <h2>Siparişlerim</h2>
+            <div class="orders-section">
+                
+                <!-- Sipariş örnekleri -->
+
+       @if(Model.Orders != null && Model.Orders.Any())
+{
+    <ul class="list-group">
+        @foreach(var order in Model.Orders)
+        {
+            <li class="list-group-item">
+                <strong>Sipariş ID:</strong> @order.Id <br />
+                <strong>Sipariş Tarihi:</strong> @order.OrderDate.ToString("dd MMM yyyy") <br />
+                <strong>Alıcı Adı:</strong> @order.Name <br />
+                <strong>Adres:</strong> @order.AdressLine, @order.City <br />
+                <strong>Email:</strong> @order.Email <br />
+                
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Aktif sipariş bulunmamaktadır.</p>
+}
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <title>Document</title>
+</head>
+<body class="bg-success" > 
+    <div class=" bg-light text-dark p-3"  >
+        <div class="container">
+            <span class="navbar-brand">
+                <i class="bi bi-bag-check"></i> ShopApp
+            </span>
+        </div>
+    </div>
+
+    <div class="container my-5"> <!-- Sayfayı ortalamak için container -->
+        @RenderBody() <!-- İçerik buraya yerleşecek -->
+    </div>
+
+    <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/jquery/jquery.min.js"></script>
+</body>
+</html>

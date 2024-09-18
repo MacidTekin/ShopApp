@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg bg-gray shadow-sm">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <i class="bi bi-bag-check me-2"></i>ShopApp
+            </a>
+
+            <!-- Categories Menu -->
+            <div class="d-flex align-items-center">
+                <vc:categories-menu></vc:categories-menu>
+            </div>
+
+            <!-- Admin Ürün Ekle -->
+            @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("admin"))
+            {
+                <ul class="navbar-nav me-3">
+                    <li class="nav-item">
+                        <a asp-controller="Product" asp-action="Create" class="nav-link">Ürün Ekle</a>
+                    </li>
+                </ul>
+            }
+
+            <!-- User and Cart Info -->
+            <ul class="navbar-nav ms-auto d-flex align-items-center">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <!-- Cart Summary Component -->
+                    <li class="nav-item me-3">
+                        <vc:cart-summary></vc:cart-summary>
+                    </li>
+
+                    <!-- User Profile -->
+                    <li class="nav-item me-3">
+                        <form asp-controller="Users" asp-action="Profile" method="post">
+                            <button type="submit" class="nav-link btn btn-link p-0">@User.Identity.Name</button>
+                        </form>
+                    </li>
+
+                    <!-- Logout -->
+                    <li class="nav-item">
+                        <form asp-controller="Users" asp-action="Logout" method="post">
+                            <button type="submit" class="nav-link btn btn-link p-0">Çıkış Yap</button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <!-- Login and Register -->
+                    <li class="nav-item me-3">
+                        <a href="/users/login" class="nav-link">Giriş Yap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/register" class="nav-link">Kayıt Ol</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+<div class="container mt-3">
+    @RenderBody()
+</div>
+<script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script> 
+<script src="/lib/jquery/jquery.min.js"></script>
+@RenderSection("Scripts", required: false)
+
+</body>
+</html>

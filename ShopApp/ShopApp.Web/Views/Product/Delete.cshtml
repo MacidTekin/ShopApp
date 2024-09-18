@@ -1,0 +1,18 @@
+@model ShopApp.Data.Entity.Product
+
+<h2>@Model.Name ürününü silmek istediğinize emin misiniz?</h2>
+
+<div class="alert alert-danger" role="alert">
+    <strong>Dikkat:</strong> Bu işlem geri alınamaz!
+</div>
+
+<!-- Ürün bilgilerini gösteriyoruz -->
+<p><strong>Ürün Adı:</strong> @Model.Name</p>
+<p><strong>Ürün Açıklaması:</strong> @Model.Description</p>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    
+    <button type="submit" class="btn btn-danger">Evet, Ürünü Sil</button>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">İptal</a>
+</form>

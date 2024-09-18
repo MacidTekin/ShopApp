@@ -1,0 +1,105 @@
+@page
+@model ShopApp.Web.Pages.CartModel
+
+<div class="container mt-5 p-5 bg-white  text-dark" style="border-radius: 7px; border: 2px solid white"> 
+    <h2 class="text-center mb-4">Alışveriş Sepeti</h2>
+
+    <div class="row">
+        <!-- Shopping Cart -->
+        <div class="col-md-8">
+            @if (Model?.Cart?.Items?.Any() == true)
+            {
+                <table class="table table-bordered table-hover text-center align-middle bg-white text-dark">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Ürün</th>
+                            <th>Miktar</th>
+                            <th>Fiyat</th>
+                            <th>Toplam</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Cart.Items)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/img/@item.Product.Image" alt="@item.Product.Name" class="img-thumbnail me-3" style="width: 80px; height: auto;">
+                                        <span>@item.Product.Name</span>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <span>@item.Quantity</span>
+                                </td>
+                                <td class="align-middle">@item.Product.Price.ToString("C2")</td>
+                                <td class="align-middle">@((item.Quantity * item.Product.Price).ToString("C2"))</td>
+                                <td class="align-middle">
+                                    <form asp-page-handler="Remove" method="post">
+                                        <input type="hidden" name="Id" value="@item.Product.Id" />
+                                        <button type="submit" class="btn btn-sm btn-danger">Ürünü Sil</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end fw-bold">Toplam:</td>
+                            <td colspan="2" class="text-start fw-bold">@Model?.Cart?.CalculateTotal().ToString("C2")</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center" role="alert">
+                    Sepetinizde ürün bulunmamaktadır.
+                </div>
+            }
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-md-4">
+            <div class="card bg-white text-dark"> <!-- Kart arka planı beyaz, yazı rengi koyu -->
+                <div class="card-body">
+                    <h5 class="card-title">Sipariş Özeti</h5>
+                    
+                    @if (Model?.Cart != null)
+                    {
+                        <ul class="list-group list-group-flush mb-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Ara toplam: 
+                                <span>@Model.Cart.CalculateTotal().ToString("C2")</span>
+                            </li>
+
+                            <!-- Product Details -->
+                            @foreach (var item in Model.Cart.Items)
+                            {
+                                <li class="list-group-item">
+                                    @item.Product.Name * @item.Quantity
+                                </li>
+                            }
+
+                            <!-- Total -->
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Toplam:
+                                <span>@Model.Cart.CalculateTotal().ToString("C2")</span>
+                            </li>
+                        </ul>
+
+                        <!-- Flexbox for Buttons -->
+                        <div class="d-grid gap-2">
+                            <a asp-controller="Order" asp-action="Checkout" class="btn btn-warning btn-lg">Şiparişi Tamamla</a>
+                            <a href="/" class="btn btn-primary btn-lg">Alışverişe Devam Et</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning text-center">Sepet bilgisi bulunamadı.</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

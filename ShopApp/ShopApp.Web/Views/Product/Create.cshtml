@@ -1,0 +1,121 @@
+@model ProductsViewModel.ProductManagmentViewModel
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="bg-white-4 p-4 rounded">
+            <h2 class="text-center mb-4">Ürün Ekle</h2>
+
+            <form asp-controller="Product" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div class="text-danger" asp-validation-summary="All"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Ürün Adı</label>
+                    <input asp-for="Name" class="form-control">
+                    <span class="text-danger" asp-validation-for="Name"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Ürün Açıklaması</label>
+                    <input asp-for="Description" class="form-control">
+                    <span class="text-danger" asp-validation-for="Description"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Url" class="form-label">Ürün Route Url</label>
+                    <input asp-for="Url" class="form-control">
+                    <span class="text-danger" asp-validation-for="Url"></span>
+                </div>
+
+                <!-- Fiyat ve stok -->
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Ürün Fiyatı</label>
+                            <div class="input-group">
+                                <input asp-for="Price" type="range" class="form-range" min="0" max="500000" step="1" id="priceRange" style="flex: 0 0 60%;" oninput="syncPriceInputs(this.value)">
+                                <input type="text" class="form-control" id="priceInput" style="flex: 0 0 20%; border-radius: 5px;" oninput="syncPriceInputs(this.value)">
+                                <span class="input-group-text" style="flex: 0 0 20%;">₺</span>
+                            </div>
+                            <span class="text-danger" asp-validation-for="Price"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="TotalStock" class="form-label">Stok Miktarı</label>
+                            <input asp-for="TotalStock" class="form-control">
+                            <span class="text-danger" asp-validation-for="TotalStock"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resim yükleme -->
+                <div class="mb-3">
+                    <label asp-for="Image" class="form-label">Ürün Resmi</label>
+                    <input asp-for="Image" type="file" class="form-control">
+                    <span class="text-danger" asp-validation-for="Image"></span>
+                </div>
+
+                <!-- Kategori seçimi (multi-select) -->
+                <div class="mb-3">
+                    <label asp-for="Categories" class="form-label">Kategoriler</label>
+                    <div>
+                        @foreach (var category in ViewBag.Categories)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="category_@category.Id" name="Categories" value="@category.Id" />
+                                <label class="form-check-label" for="category_@category.Id">@category.Name</label>
+                            </div>
+                        }
+                    </div>
+                    <span class="text-danger" asp-validation-for="Categories"></span>
+                </div>
+
+                <!-- İçerik -->
+                <div class="mb-3">
+                    <label asp-for="Content" class="form-label">Ürün İçeriği</label>
+                    <textarea asp-for="Content" id="Content" class="form-control"></textarea>
+                    <span class="text-danger" asp-validation-for="Content"></span>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Ürün Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function syncPriceInputs(value) {
+        const numericValue = parseFloat(value.replace(/\./g, '').replace('₺', ''));
+        if (!isNaN(numericValue)) {
+            const formattedValue = new Intl.NumberFormat('tr-TR').format(numericValue);
+            document.getElementById('priceInput').value = formattedValue;
+            document.getElementById('priceRange').value = numericValue;
+        }
+    }
+
+    document.getElementById('priceInput').addEventListener('input', function() {
+        const rawValue = this.value.replace(/\./g, '').replace('₺', '');
+        const numericValue = parseFloat(rawValue);
+        if (!isNaN(numericValue)) {
+            document.getElementById('priceRange').value = numericValue;
+        }
+    });
+
+    @section Scripts{
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.3.0/tinymce.min.js" integrity="sha512-RUZ2d69UiTI+LdjfDCxqJh5HfjmOcouct56utQNVRjr90Ea8uHQa+gCxvxDTC9fFvIGP+t4TDDJWNTRV48tBpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script>
+            tinymce.init({
+                selector: '#Content',
+                Contentmenubar: false,
+                plugins: 'link image code',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image',
+            })
+        </script>
+    }
+
+
+</script>

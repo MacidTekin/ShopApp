@@ -1,0 +1,135 @@
+@model ProductsViewModel.ProductDetailsViewModel
+
+@if (Model != null && Model.Product != null)
+{
+    @* ürün resmi *@
+    <div class="row">
+        <div class="col-lg-8 d-flex align-items-center justify-content-center">
+            <div class="card" style="width: 100%; height: auto;">
+                <img src="~/img/@Model.Product.Image" class="img-fluid" style="max-height: 400px; object-fit: contain; cover; width: 100%;">
+            </div>
+        </div>
+        @* ürün özellikleri *@
+        <div class="col-lg-4">
+            <h1>Özellikler</h1>
+            <hr>
+            <div class="card-body">
+                <h4 class="card-title">@Model.Product.Name</h4>
+                <h6 class="card-text mt-3">
+                    Ürün Adı: @Model.Product.Description
+                    <br>
+                    Stok Miktarı: @Model.Product.TotalStock
+                </h6>
+                <div class="card-text">
+                    @foreach (var content in Model.Product.Content)
+                    {
+                        <p>@Html.Raw(content)</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* yapılan yorumlar *@
+    <div class="bg-white-3">
+        <div class="card border-0">
+            <div class="card-header pb-0 bg-white">
+                <h4><span id="commentCount">@Model.Product.Comments.Count()</span> adet yorum</h4>
+            </div>
+            <div class="card-body">
+                <div id="comments">
+                    @if (Model.PagedComments != null && Model.PagedComments.Any()){
+                        @foreach(var comment in Model.PagedComments)
+                        {
+                            <div class="my-4 d-flex align-items-start">
+                                <img src="~/img/@comment.User.Image" class="avatar rounded-circle me-3" alt="">
+                                <div>
+                                    <div class="mb-2">
+                                        <h6>@comment.User.UserName <span class="text-muted small">@comment.CommentDate</span></h6>
+                                    </div>
+                                    <div>
+                                        @comment.CommentText
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                }
+                </div>
+
+                @if(User.Identity!.IsAuthenticated)
+                {
+                <div>
+                    <h4>Yorum ekle</h4>
+                    <form action="/AddComment" method="post">
+                    <input type="hidden" id="ProductId" name="ProductId" value="@Model.Product.Id">
+
+                    <div class="mb-3">
+                        <label for="Text" class="form-label">Yorum</label>
+                        <textarea type="text" name="Text" id="Text" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <button id="btnYorumKayit" type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                    </form>
+                </div>
+                }
+                else
+                {
+                    <p>Yorum yapmak için lütfen giriş yapmalısınız. <a href="/users/Login">Giriş Yap</a> </p>
+                }
+
+            </div>
+        </div>
+    </div>
+    <pagination-comments current-page="@Model.CurrentPage" total-pages="@Model.TotalPages" url="/Product/Details/@Model.Product.Url"></pagination-comments>
+}
+else
+{
+    <p>Ürün bulunamadı.</p>
+}
+
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- JQuery -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#btnYorumKayit").click(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddComment")',
+                    dataType: 'json',
+                    data: {
+                        ProductId: $('#ProductId').val(),
+                        UserName: $('#UserName').val(),
+                        Text: $('#Text').val(),
+                    },
+                    success: function(yorum) {
+                        console.log(yorum);
+                        var date = new Date(yorum.commentDate);
+                        $("#comments").append(`
+                            <div class="my-4 d-flex align-items-start">
+                                <img src="/img/${yorum.avatar}" class="avatar rounded-circle me-3" alt="">
+                                <div>
+                                    <div class="mb-2">
+                                        <h6>${yorum.username} <span class="text-muted small">${date.toLocaleString()}</span></h6>
+                                    </div>
+                                    <div>
+                                        ${yorum.text}
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+
+                        $("#UserName").val('');
+                        $("#Text").val('');
+
+                        var adet = parseInt($("#commentCount").text());
+                        $("#commentCount").text(adet + 1);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+}

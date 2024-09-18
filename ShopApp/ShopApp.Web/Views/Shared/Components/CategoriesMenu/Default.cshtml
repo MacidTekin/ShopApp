@@ -1,0 +1,15 @@
+@model List<Category>
+
+<div class="dropdown">
+    <a href="#" class="btn btn-text-light-emphasis dropdown-toggle ms-3" data-bs-toggle="dropdown">
+        <i class="bi bi-list"></i> Tüm Kategoriler
+    </a>
+    <ul class="dropdown-menu bg-white dropdown-menu-end">
+        @foreach (var cat in Model)
+        {
+            <li>
+                <a class="dropdown-item" href="/products/category/@cat.Url">@cat.Name</a>
+            </li>
+        }
+    </ul>
+</div>
